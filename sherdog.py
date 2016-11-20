@@ -238,16 +238,22 @@ class Event(LazySherdogObject):
                     winner=None, match=None, method=None, referee=None,
                     round=None, time=None)
 
-        # parse match, method, ref, round, time
-        td = dom.find('table', {'class':'resume'}).findAll('td')
-        keys = [x.contents[0].text.lower() for x in td]
-        values = [x.contents[-1].lstrip() for x in td]
-        info = dict(zip(keys, values))
-        time = self._parse_fight_time(info['time'])
-        return Fight(event=self, fighters=fighters,
-                winner=self._fight_winner(result, left_fighter, right_fighter),
-                match=int(info['match']), method=info['method'], referee=info['referee'],
-                round=int(info['round']), time=time)
+		try:
+			# parse match, method, ref, round, time
+			td = dom.find('table', {'class':'resume'}).findAll('td')
+			keys = [x.contents[0].text.lower() for x in td]
+			values = [x.contents[-1].lstrip() for x in td]
+			info = dict(zip(keys, values))
+			time = self._parse_fight_time(info['time'])
+			return Fight(event=self, fighters=fighters,
+					winner=self._fight_winner(result, left_fighter, right_fighter),
+					match=int(info['match']), method=info['method'], referee=info['referee'],
+					round=int(info['round']), time=time)
+		except:
+            return Fight(event=self, fighters=fighters,
+                    winner=None, match=None, method=None, referee=None,
+                    round=None, time=None)
+			
 
     def _parse_sub_fight(self, row):
         td = row.findAll('td')
