@@ -250,9 +250,9 @@ class Event(LazySherdogObject):
 					match=int(info['match']), method=info['method'], referee=info['referee'],
 					round=int(info['round']), time=time)
 		except:
-            return Fight(event=self, fighters=fighters,
-                    winner=None, match=None, method=None, referee=None,
-                    round=None, time=None)
+					return Fight(event=self, fighters=fighters,
+							winner=None, match=None, method=None, referee=None,
+							round=None, time=None)
 			
 
     def _parse_sub_fight(self, row):
